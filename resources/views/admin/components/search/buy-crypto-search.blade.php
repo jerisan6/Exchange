@@ -1,0 +1,1 @@
+@include('admin.components.data-table.buy-crypto-table',compact("transactions"))

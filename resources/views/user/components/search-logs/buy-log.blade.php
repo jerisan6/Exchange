@@ -1,0 +1,1 @@
+@include('user.components.crypto-table.buy-crypto',compact('transactions'))

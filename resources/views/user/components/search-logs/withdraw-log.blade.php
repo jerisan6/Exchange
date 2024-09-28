@@ -1,0 +1,1 @@
+@include('user.components.crypto-table.withdraw-crypto',compact('transactions'))
