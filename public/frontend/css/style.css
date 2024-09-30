@@ -621,7 +621,7 @@ blockquote .quote-icon {
     [ ## Table ]
 */
 .table-wrapper {
-  background-color: #181a44;
+  background-color: #171718;
   padding: 30px;
   border-radius: 5px;
 }
@@ -1777,11 +1777,42 @@ option {
   line-height: initial;
   font-weight: 400;
 }
-.select2-container--default .select2-search--dropdown .select2-search__field {
-  background-color: #2f2f30;
-  border: 1px solid #2f2f30 !important;
+
+/*Busqueda en seleccione red y pago*/
+.select2-container--default .select2-search--dropdown {
+    position: relative;
+    padding: 4px;
 }
-.select2-container--default .select2-results__option--selected{
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: #171718;
+    border: 1px solid #2f2f30 !important;
+    padding: 8px 40px 8px 30px;
+    height: 36px;
+    color: #ffffff;
+    font-size: 15px;
+    width: 100%;
+    padding-left: 50px;
+}
+
+.select2-search--dropdown .las.la-search {
+    position: absolute !important;
+    top: 50% !important;
+    left: 12px !important;
+    transform: translateY(-50%) !important;
+    color: #e0a846 !important;
+    font-size: 20px !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field::placeholder {
+    color: #ffffff;
+}
+
+
+
+.select2-container--default .select2-results__option--selected {
   background: linear-gradient(to bottom, #ae6e14 0%, #2a2a2b 50%, #171718 100%);
   color: #ffffff;
   border: 1px solid #2f2f30;
@@ -1809,8 +1840,8 @@ option {
 }
 
 .select2-dropdown {
-  background: #181a44;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #2f2f30;
+  border: 1px solid rgba(47 47 48);
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -1967,9 +1998,13 @@ option {
   transition: all 0.3s;
   background-color: #171718;
   border: 1px solid #2f2f30;
+  color: #ffffff;
 }
-.custom-select-list .custom-option:hover, .custom-select-list .custom-option.active {
-  background-color: #142B57;
+.custom-select-list, .custom-select-list .custom-option.active {
+  background: linear-gradient(to bottom, #ae6e14 0%, #2a2a2b 50%, #171718 100%);
+}
+.custom-select-list .custom-option:hover {
+  background-color: #e0a846; 
 }
 .custom-select-list .custom-option img {
   width: 30px;
@@ -5057,7 +5092,7 @@ option {
   }
 }
 .support-card-wrapper .card-header {
-  background-color: #181a44;
+  background-color: #171718;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 5px 5px 0 0;
 }
@@ -5070,6 +5105,7 @@ option {
   max-height: 70vh;
   min-height: 70vh;
   padding: 30px 15px;
+  background-color: #171718;
 }
 .chat-container .media > * {
   margin: 0 10px;
@@ -5151,7 +5187,7 @@ option {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 12px 20px;
-  background-color: #181a44;
+  background-color: #171718;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0 0 0 10px;
 }
@@ -5171,7 +5207,7 @@ option {
   font-size: 14px;
   border: none;
   outline: none !important;
-  background-color: #142B57;
+  background-color: #2f2f30;
   border-radius: 5px;
   min-height: 40px;
 }
@@ -5234,7 +5270,7 @@ option {
 }
 
 .support-profile-wrapper {
-  background-color: #1e2049;
+  background-color: #171718;
   width: 500px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
@@ -5258,7 +5294,7 @@ option {
 }
 .support-profile-wrapper .support-profile-header {
   padding: 19px 20px;
-  background-color: #181a44;
+  background-color: #171718;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5317,7 +5353,7 @@ option {
   height: 250px;
   border-radius: 15px 15px 0 0;
   border: none;
-  background-color: #090B2C;
+  background-color: #e0a846;
   position: relative;
 }
 
@@ -5522,7 +5558,8 @@ option {
 }
 .notification-wrapper.active {
   -webkit-transform: scaleX(1);
-          transform: scaleX(1);
+  transform: scaleX(1);
+  background-color: #171718;
 }
 .notification-wrapper .notification-header {
   display: -webkit-box;
@@ -5593,7 +5630,7 @@ option {
 }
 
 .exchange-area {
-  background: #142B57;
+  background: linear-gradient(to bottom, #3a3a3c 0%, #2a2a2b 50%, #171718 100%);
   padding: 30px 80px;
   border-radius: 5px;
   display: inline-block;
