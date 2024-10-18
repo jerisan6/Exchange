@@ -308,11 +308,99 @@
 
                 });
 
+                // Función para actualizar y guardar automáticamente
+                function updateAndSaveRate() {
+                    var code = $('.currency-code').val().toUpperCase();
+                    var rateInput = $('#rate-input');
+                    var oldRate = rateInput.val();
+                    
+                    if (cryptoCurrencies.includes(code)) {
+                        fetchCryptoExchangeRate(defaultCurrency, code, rateInput, function(newRate) {
+                            if (newRate !== oldRate) {
+                                saveUpdatedRate(code, newRate);
+                            }
+                        });
+                    } else {
+                        fetchFiatExchangeRate(defaultCurrency, code, rateInput, function(newRate) {
+                            if (newRate !== oldRate) {
+                                saveUpdatedRate(code, newRate);
+                            }
+                        });
+                    }
+                }
+
+                function fetchCryptoExchangeRate(fromCurrency, toCurrency, rateInput, callback) {
+                    $.ajax({
+                        url: `https://min-api.cryptocompare.com/data/price?fsym=${fromCurrency}&tsyms=${toCurrency}`,
+                        method: 'GET',
+                        success: function(data) {
+                            if (data[toCurrency]) {
+                                var newRate = (1 / data[toCurrency]).toFixed(8);
+                                rateInput.val(newRate);
+                                if (callback) callback(newRate);
+                            } else {
+                                rateInput.val('N/A');
+                                if (callback) callback('N/A');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching crypto rate:", error);
+                            rateInput.val('Error');
+                            if (callback) callback('Error');
+                        }
+                    });
+                }
+
+                function fetchFiatExchangeRate(fromCurrency, toCurrency, rateInput, callback) {
+                    $.ajax({
+                        url: `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`,
+                        method: 'GET',
+                        success: function(data) {
+                            if (data.rates && data.rates[toCurrency]) {
+                                var newRate = (1 / data.rates[toCurrency]).toFixed(8);
+                                rateInput.val(newRate);
+                                if (callback) callback(newRate);
+                            } else {
+                                rateInput.val('N/A');
+                                if (callback) callback('N/A');
+                            }
+                        },
+                        error: function() {
+                            rateInput.val('Error');
+                            if (callback) callback('Error');
+                        }
+                    });
+                }
+
+                function saveUpdatedRate(code, rate) {
+                    console.log('Intentando guardar:', { target: code, rate: rate });
+                    $.ajax({
+                        url: "{{ setRoute('admin.currency.update.rate') }}",
+                        method: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            target: code,
+                            rate: rate
+                        },
+                        success: function(response) {
+                            console.log('Tasa actualizada y guardada:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error al guardar la tasa:', error);
+                        }
+                    });
+                }
+
+                // Actualizar y guardar cuando se abre el modal
+                $(document).on('click', '.edit-modal-button', function() {
+                    setTimeout(updateAndSaveRate, 500);
+                });
+
             });
 
             var defaultCurrency = '{{ get_default_currency_code() }}';
             var supportedCurrencies = ['USD', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'SEK', 'KRW', 'SGD', 'NOK', 'MXN', 'INR', 'RUB', 'ZAR', 'TRY', 'BRL', 'TWD', 'DKK', 'PLN', 'THB', 'IDR', 'HUF', 'CZK', 'ILS', 'CLP', 'PHP', 'AED', 'COP', 'SAR', 'MYR', 'RON', 'BTC', 'ETH', 'LTC', 'BCH', 'BNB', 'EOS', 'XRP', 'XLM', 'LINK', 'DOT', 'YFI', 'USDT', 'USDC', 'ADA', 'SOL', 'XMR', 'BUSD', 'DOGE'];
-            var cryptoCurrencies = ['BTC', 'ETH', 'LTC', 'BCH', 'BNB', 'EOS', 'XRP', 'XLM', 'LINK', 'DOT', 'YFI', 'USDT', 'USDC', 'ADA', 'SOL', 'XMR', 'BUSD', 'DOGE'];
+            var cryptoCurrencies = ['BTC', 'ETH', 'LTC', 'BCH', 'BNB', 'EOS', 'XRP', 'XLM', 'LINK', 'DOT', 'YFI', 'USDT', 'USDC', 'ADA', 'SOL', 'XMR', 'BUSD', 'DOGE', 'DAI'];
 
             // Función para actualizar todas las tasas de cambio
             function updateAllExchangeRates() {
@@ -390,4 +478,7 @@
         </script>
 
     @endpush
+
+
+
 
